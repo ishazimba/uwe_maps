@@ -660,8 +660,13 @@ class _MapViewState extends State<MapView> {
               zoomGesturesEnabled: true,
               zoomControlsEnabled: false,
               polylines: Set<Polyline>.of(polylines.values),
-              onMapCreated: (GoogleMapController controller) {
+              onMapCreated: (GoogleMapController controller) async {
                 mapController = controller;
+                Position position = await _determinePosition();
+                mapController.animateCamera(CameraUpdate.newCameraPosition(
+                    CameraPosition(
+                        target: LatLng(position.latitude, position.longitude),
+                        zoom: 17)));
               },
             ),
 
@@ -760,7 +765,7 @@ class _MapViewState extends State<MapView> {
                                           CameraPosition(
                                               target: LatLng(position.latitude,
                                                   position.longitude),
-                                              zoom: 14)));
+                                              zoom: 17)));
 
                                   setState(() {});
 
