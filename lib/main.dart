@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:uwefrenchaymaps/secrets.dart'; // Stores the Google Maps API Key
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geocoding/geocoding.dart';
@@ -156,8 +155,6 @@ class _MapViewState extends State<MapView> {
       List<Location> startPlacemark = await locationFromAddress(_startAddress);
       List<Location> destinationPlacemark =
           await locationFromAddress(_destinationAddress);
-
-
 
       // Use the retrieved coordinates of the current position,
       // instead of the address if the start position is user's
@@ -968,9 +965,9 @@ class _MapViewState extends State<MapView> {
             // Show zoom buttons
             SafeArea(
               child: Padding(
-                padding: const EdgeInsets.only(left: 8.0),
+                padding: const EdgeInsets.only(left: 10.0, bottom: 40.0),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     ClipOval(
                       child: Material(
@@ -990,7 +987,7 @@ class _MapViewState extends State<MapView> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 8.0),
+                    SizedBox(height: 10.0),
                     ClipOval(
                       child: Material(
                         color: Colors.white, // button color
@@ -1047,8 +1044,8 @@ class _MapViewState extends State<MapView> {
                           // ),
                           SizedBox(height: 8),
                           _textField(
-                              label: 'Start',
-                              hint: 'Choose starting point',
+                              label: 'Starting point',
+                              hint: 'Your Location',
                               prefixIcon: Icon(Icons.location_on),
                               suffixIcon: IconButton(
                                 icon: Icon(Icons.my_location),
@@ -1078,21 +1075,17 @@ class _MapViewState extends State<MapView> {
                               }),
                           SizedBox(height: 10),
                           _textField(
-
                               label: 'Destination',
-                              hint: 'Enter the destination',
+                              hint: 'Choose Destination',
                               prefixIcon: Icon(Icons.add_location_sharp),
                               controller: destinationAddressController,
                               focusNode: destinationAddressFocusNode,
                               width: width,
-
                               locationCallback: (String value) {
                                 setState(() {
                                   _destinationAddress = value;
                                 });
-                              }
-
-                              ),
+                              }),
                           SizedBox(height: 5),
                           Visibility(
                             visible: _placeDistance == null ? false : true,
@@ -1104,25 +1097,22 @@ class _MapViewState extends State<MapView> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 1),
+                          SizedBox(height: 1), //on pressed find the block
                           ElevatedButton(
                             onPressed: (_startAddress != '' &&
                                     _destinationAddress != '')
                                 ? () async {
                                     startAddressFocusNode.unfocus();
                                     destinationAddressFocusNode.unfocus();
-                                    
-                                    setState(() {
 
+                                    setState(() {
                                       if (markers.isNotEmpty) markers.clear();
                                       if (polylines.isNotEmpty)
                                         polylines.clear();
                                       if (polylineCoordinates.isNotEmpty)
                                         polylineCoordinates.clear();
                                       _placeDistance = null;
-                                    }
-                                    );
-
+                                    });
 
                                     _calculateDistance().then((isCalculated) {
                                       if (isCalculated) {
@@ -1174,7 +1164,7 @@ class _MapViewState extends State<MapView> {
               child: Align(
                 alignment: Alignment.bottomRight,
                 child: Padding(
-                  padding: const EdgeInsets.only(right: 10.0, bottom: 10.0),
+                  padding: const EdgeInsets.only(right: 10.0, bottom: 40.0),
                   child: ClipOval(
                     child: Material(
                       color: Colors.white, // button color

@@ -1,8 +1,10 @@
 # uwefrenchaymaps
 
-A new Flutter project.
+Campus maps application for UWE, Frenchay, focused on navigation from point A to point B.
 
 ## Getting Started
+
+
 
 This project is a starting point for a Flutter application.
 
