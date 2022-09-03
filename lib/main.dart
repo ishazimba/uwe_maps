@@ -68,7 +68,8 @@ class _MapViewState extends State<MapView> {
     required Function(String) locationCallback,
   }) {
     return Container(
-      width: width * 0.8,
+      width: width * 0.89,
+      height: 50,
       child: TextField(
         onChanged: (value) {
           locationCallback(value);
@@ -80,14 +81,14 @@ class _MapViewState extends State<MapView> {
           suffixIcon: suffixIcon,
           labelText: label,
           filled: true,
-          fillColor: Colors.white,
+          fillColor: Colors.white70,
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(5.0),
             ),
             borderSide: BorderSide(
               color: Colors.grey.shade400,
-              width: 3,
+              width: 2,
             ),
           ),
           focusedBorder: OutlineInputBorder(
@@ -155,6 +156,8 @@ class _MapViewState extends State<MapView> {
       List<Location> startPlacemark = await locationFromAddress(_startAddress);
       List<Location> destinationPlacemark =
           await locationFromAddress(_destinationAddress);
+
+
 
       // Use the retrieved coordinates of the current position,
       // instead of the address if the start position is user's
@@ -369,10 +372,6 @@ class _MapViewState extends State<MapView> {
         },
       );
 
-      // Adding the markers to the list
-      markers.add(startMarker);
-      markers.add(destinationMarker);
-
       markers
           .addLabelMarker(LabelMarker(
         label: "P",
@@ -391,7 +390,7 @@ class _MapViewState extends State<MapView> {
         label: "Q",
         markerId: MarkerId("Qblock"),
         position: LatLng(51.500958444534554, -2.5482354911411145),
-        backgroundColor: Colors.greenAccent,
+        backgroundColor: Colors.green,
       ))
           .then(
         (value) {
@@ -404,7 +403,7 @@ class _MapViewState extends State<MapView> {
         label: "Q",
         markerId: MarkerId("Qblock2"),
         position: LatLng(51.5018319430442, -2.548748099906706),
-        backgroundColor: Colors.greenAccent,
+        backgroundColor: Colors.green,
       ))
           .then(
         (value) {
@@ -520,8 +519,7 @@ class _MapViewState extends State<MapView> {
         'DESTINATION COORDINATES: ($destinationLatitude, $destinationLongitude)',
       );
 
-      // Calculating to check that the position relative
-      // to the frame, and pan & zoom the camera accordingly.
+      // Calculating to check that the position relative to the frame, and pan & zoom the camera accordingly.
       double miny = (startLatitude <= destinationLatitude)
           ? startLatitude
           : destinationLatitude;
@@ -541,8 +539,7 @@ class _MapViewState extends State<MapView> {
       double northEastLatitude = maxy;
       double northEastLongitude = maxx;
 
-      // Accommodate the two locations within the
-      // camera view of the map
+      // Accommodate the two locations within the camera view of the map
       mapController.animateCamera(
         CameraUpdate.newLatLngBounds(
           LatLngBounds(
@@ -553,22 +550,12 @@ class _MapViewState extends State<MapView> {
         ),
       );
 
-      // Calculating the distance between the start and the end positions
-      // with a straight path, without considering any route
-      // double distanceInMeters = await Geolocator.bearingBetween(
-      //   startLatitude,
-      //   startLongitude,
-      //   destinationLatitude,
-      //   destinationLongitude,
-      // );
-
       await _createPolylines(startLatitude, startLongitude, destinationLatitude,
           destinationLongitude);
 
       double totalDistance = 0.0;
 
-      // Calculating the total distance by adding the distance
-      // between small segments
+      //calculate the total distance
       for (int i = 0; i < polylineCoordinates.length - 1; i++) {
         totalDistance += _coordinateDistance(
           polylineCoordinates[i].latitude,
@@ -580,7 +567,7 @@ class _MapViewState extends State<MapView> {
 
       setState(() {
         _placeDistance = totalDistance.toStringAsFixed(2);
-        print('DISTANCE: $_placeDistance km ');
+        print('DISTANCE: $_placeDistance km');
       });
 
       return true;
@@ -590,7 +577,7 @@ class _MapViewState extends State<MapView> {
     return false;
   }
 
-  // Formula for calculating distance between two coordinates
+  // Formula to calculate distance between two coordinates
   // https://stackoverflow.com/a/54138876/11910277
   double _coordinateDistance(lat1, lon1, lat2, lon2) {
     var p = 0.017453292519943295;
@@ -667,13 +654,321 @@ class _MapViewState extends State<MapView> {
                     CameraPosition(
                         target: LatLng(position.latitude, position.longitude),
                         zoom: 17)));
+                markers
+                    .addLabelMarker(LabelMarker(
+                  label: "A",
+                  markerId: MarkerId("A"),
+                  position: LatLng(51.49933604129863, -2.5473945844650996),
+                  backgroundColor: Colors.green,
+                ))
+                    .then(
+                  (value) {
+                    setState(() {});
+                  },
+                );
+
+                markers
+                    .addLabelMarker(LabelMarker(
+                  label: "B",
+                  markerId: MarkerId("B"),
+                  position: LatLng(51.49894380901779, -2.5480912190349003),
+                  backgroundColor: Colors.green,
+                ))
+                    .then(
+                  (value) {
+                    setState(() {});
+                  },
+                );
+
+                markers
+                    .addLabelMarker(LabelMarker(
+                  label: "C",
+                  markerId: MarkerId("C"),
+                  position: LatLng(51.49947565916752, -2.5482416303646365),
+                  backgroundColor: Colors.green,
+                ))
+                    .then(
+                  (value) {
+                    setState(() {});
+                  },
+                );
+
+                markers
+                    .addLabelMarker(LabelMarker(
+                  label: "D",
+                  markerId: MarkerId("D"),
+                  position: LatLng(51.50001808592639, -2.5483690091012723),
+                  backgroundColor: Colors.green,
+                ))
+                    .then(
+                  (value) {
+                    setState(() {});
+                  },
+                );
+
+                markers
+                    .addLabelMarker(LabelMarker(
+                  label: "E",
+                  markerId: MarkerId("E"),
+                  position: LatLng(51.500415963927516, -2.548256603990805),
+                  backgroundColor: Colors.green,
+                ))
+                    .then(
+                  (value) {
+                    setState(() {});
+                  },
+                );
+
+                markers
+                    .addLabelMarker(LabelMarker(
+                  label: "F",
+                  markerId: MarkerId("F"),
+                  position: LatLng(51.50032525179908, -2.5476620323729042),
+                  backgroundColor: Colors.green,
+                ))
+                    .then(
+                  (value) {
+                    setState(() {});
+                  },
+                );
+
+                markers
+                    .addLabelMarker(LabelMarker(
+                  label: "G",
+                  markerId: MarkerId("G"),
+                  position: LatLng(51.50023561068161, -2.5469502159056288),
+                  backgroundColor: Colors.green,
+                ))
+                    .then(
+                  (value) {
+                    setState(() {});
+                  },
+                );
+
+                markers
+                    .addLabelMarker(LabelMarker(
+                  label: "H",
+                  markerId: MarkerId("H"),
+                  position: LatLng(51.49997242079033, -2.546906964248796),
+                  backgroundColor: Colors.green,
+                ))
+                    .then(
+                  (value) {
+                    setState(() {});
+                  },
+                );
+
+                markers
+                    .addLabelMarker(LabelMarker(
+                  label: "J",
+                  markerId: MarkerId("J"),
+                  position: LatLng(51.499786733685056, -2.5464183028393483),
+                  backgroundColor: Colors.green,
+                ))
+                    .then(
+                  (value) {
+                    setState(() {});
+                  },
+                );
+
+                markers
+                    .addLabelMarker(LabelMarker(
+                  label: "K",
+                  markerId: MarkerId("K"),
+                  position: LatLng(51.49967484391101, -2.5469934914901953),
+                  backgroundColor: Colors.green,
+                ))
+                    .then(
+                  (value) {
+                    setState(() {});
+                  },
+                );
+
+                markers
+                    .addLabelMarker(LabelMarker(
+                  label: "L",
+                  markerId: MarkerId("L"),
+                  position: LatLng(51.49965738077651, -2.547519473254706),
+                  backgroundColor: Colors.green,
+                ))
+                    .then(
+                  (value) {
+                    setState(() {});
+                  },
+                );
+
+                markers
+                    .addLabelMarker(LabelMarker(
+                  label: "M",
+                  markerId: MarkerId("M"),
+                  position: LatLng(51.50053847997679, -2.547106112554106),
+                  backgroundColor: Colors.green,
+                ))
+                    .then(
+                  (value) {
+                    setState(() {});
+                  },
+                );
+
+                markers
+                    .addLabelMarker(LabelMarker(
+                  label: "N",
+                  markerId: MarkerId("N"),
+                  position: LatLng(51.500865361999985, -2.547086243627545),
+                  backgroundColor: Colors.green,
+                ))
+                    .then(
+                  (value) {
+                    setState(() {});
+                  },
+                );
+
+                markers
+                    .addLabelMarker(LabelMarker(
+                  label: "P",
+                  markerId: MarkerId("P"),
+                  position: LatLng(51.50112949028888, -2.5493190545636035),
+                  backgroundColor: Colors.green,
+                ))
+                    .then(
+                  (value) {
+                    setState(() {});
+                  },
+                );
+
+                markers
+                    .addLabelMarker(LabelMarker(
+                  label: "Q",
+                  markerId: MarkerId("Qblok"),
+                  position: LatLng(51.500958444534554, -2.5482354911411145),
+                  backgroundColor: Colors.green,
+                ))
+                    .then(
+                  (value) {
+                    setState(() {});
+                  },
+                );
+
+                markers
+                    .addLabelMarker(LabelMarker(
+                  label: "Q",
+                  markerId: MarkerId("Qblok2"),
+                  position: LatLng(51.5018319430442, -2.548748099906706),
+                  backgroundColor: Colors.green,
+                ))
+                    .then(
+                  (value) {
+                    setState(() {});
+                  },
+                );
+
+                markers
+                    .addLabelMarker(LabelMarker(
+                  label: "R",
+                  markerId: MarkerId("Rblok"),
+                  position: LatLng(51.502537819854695, -2.548781397836527),
+                  backgroundColor: Colors.green,
+                ))
+                    .then(
+                  (value) {
+                    setState(() {});
+                  },
+                );
+
+                markers
+                    .addLabelMarker(LabelMarker(
+                  label: "S",
+                  markerId: MarkerId("Sblok"),
+                  position: LatLng(51.49782752194857, -2.5481758218496826),
+                  backgroundColor: Colors.green,
+                ))
+                    .then(
+                  (value) {
+                    setState(() {});
+                  },
+                );
+                markers
+                    .addLabelMarker(LabelMarker(
+                  label: "T",
+                  markerId: MarkerId("T"),
+                  position: LatLng(51.501624727626826, -2.5520239250454897),
+                  backgroundColor: Colors.green,
+                ))
+                    .then(
+                  (value) {
+                    setState(() {});
+                  },
+                );
+
+                markers
+                    .addLabelMarker(LabelMarker(
+                  label: "U (Student Union)",
+                  markerId: MarkerId("UBlok"),
+                  position: LatLng(51.50056504211304, -2.551526571003834),
+                  backgroundColor: Colors.green,
+                ))
+                    .then(
+                  (value) {
+                    setState(() {});
+                  },
+                );
+                markers
+                    .addLabelMarker(LabelMarker(
+                  label: "W",
+                  markerId: MarkerId("Wblok"),
+                  position: LatLng(51.50065792373229, -2.5526900285761545),
+                  backgroundColor: Colors.green,
+                ))
+                    .then(
+                  (value) {
+                    setState(() {});
+                  },
+                );
+                markers
+                    .addLabelMarker(LabelMarker(
+                  label: "Bristol Business School (X)",
+                  markerId: MarkerId("Xblok"),
+                  position: LatLng(51.500789121338414, -2.5497931042109565),
+                  backgroundColor: Colors.green,
+                ))
+                    .then(
+                  (value) {
+                    setState(() {});
+                  },
+                );
+
+                markers
+                    .addLabelMarker(LabelMarker(
+                  label: "Z",
+                  markerId: MarkerId("Zblok"),
+                  position: LatLng(51.50043352343438, -2.5499241848095235),
+                  backgroundColor: Colors.green,
+                ))
+                    .then(
+                  (value) {
+                    setState(() {});
+                  },
+                );
+
+                markers
+                    .addLabelMarker(LabelMarker(
+                  label: "School of Engineering",
+                  markerId: MarkerId("ZSOE"),
+                  position: LatLng(51.50006661766683, -2.5502449446375195),
+                  backgroundColor: Colors.green,
+                ))
+                    .then(
+                  (value) {
+                    setState(() {});
+                  },
+                );
               },
             ),
 
             // Show zoom buttons
             SafeArea(
               child: Padding(
-                padding: const EdgeInsets.only(left: 10.0),
+                padding: const EdgeInsets.only(left: 8.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -683,8 +978,8 @@ class _MapViewState extends State<MapView> {
                         child: InkWell(
                           splashColor: Colors.blue, // inkwell color
                           child: SizedBox(
-                            width: 50,
-                            height: 50,
+                            width: 40,
+                            height: 40,
                             child: Icon(Icons.add),
                           ),
                           onTap: () {
@@ -695,15 +990,15 @@ class _MapViewState extends State<MapView> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 8.0),
                     ClipOval(
                       child: Material(
                         color: Colors.white, // button color
                         child: InkWell(
                           splashColor: Colors.blue, // inkwell color
                           child: SizedBox(
-                            width: 50,
-                            height: 50,
+                            width: 40,
+                            height: 40,
                             child: Icon(Icons.remove),
                           ),
                           onTap: () {
@@ -724,7 +1019,7 @@ class _MapViewState extends State<MapView> {
               child: Align(
                 alignment: Alignment.topCenter,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 5.0),
+                  padding: const EdgeInsets.only(top: 2.0),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.blueAccent,
@@ -732,17 +1027,17 @@ class _MapViewState extends State<MapView> {
                         Radius.circular(10.0),
                       ),
                     ),
-                    width: width * 0.95,
+                    width: width * 0.98,
                     child: Padding(
-                      padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+                      padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           Image(
                             image: NetworkImage(
                                 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/UWE_Bristol_logo.svg/1280px-UWE_Bristol_logo.svg.png'),
-                            height: 60,
-                            width: 200,
+                            height: 55,
+                            width: 120,
                             alignment: Alignment.topCenter,
                           ),
                           //Text(
@@ -783,18 +1078,22 @@ class _MapViewState extends State<MapView> {
                               }),
                           SizedBox(height: 10),
                           _textField(
+
                               label: 'Destination',
-                              hint: 'Choose destination',
+                              hint: 'Enter the destination',
                               prefixIcon: Icon(Icons.add_location_sharp),
                               controller: destinationAddressController,
                               focusNode: destinationAddressFocusNode,
                               width: width,
+
                               locationCallback: (String value) {
                                 setState(() {
                                   _destinationAddress = value;
                                 });
-                              }),
-                          SizedBox(height: 10),
+                              }
+
+                              ),
+                          SizedBox(height: 5),
                           Visibility(
                             visible: _placeDistance == null ? false : true,
                             child: Text(
@@ -805,21 +1104,25 @@ class _MapViewState extends State<MapView> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 1),
                           ElevatedButton(
                             onPressed: (_startAddress != '' &&
                                     _destinationAddress != '')
                                 ? () async {
                                     startAddressFocusNode.unfocus();
                                     destinationAddressFocusNode.unfocus();
+                                    
                                     setState(() {
+
                                       if (markers.isNotEmpty) markers.clear();
                                       if (polylines.isNotEmpty)
                                         polylines.clear();
                                       if (polylineCoordinates.isNotEmpty)
                                         polylineCoordinates.clear();
                                       _placeDistance = null;
-                                    });
+                                    }
+                                    );
+
 
                                     _calculateDistance().then((isCalculated) {
                                       if (isCalculated) {
@@ -848,14 +1151,14 @@ class _MapViewState extends State<MapView> {
                                 'Find the Block'.toUpperCase(),
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 20.0,
+                                  fontSize: 17.0,
                                 ),
                               ),
                             ),
                             style: ElevatedButton.styleFrom(
                               primary: Colors.green,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.0),
+                                borderRadius: BorderRadius.circular(14.0),
                               ),
                             ),
                           ),
@@ -874,9 +1177,9 @@ class _MapViewState extends State<MapView> {
                   padding: const EdgeInsets.only(right: 10.0, bottom: 10.0),
                   child: ClipOval(
                     child: Material(
-                      color: Colors.orange.shade100, // button color
+                      color: Colors.white, // button color
                       child: InkWell(
-                        splashColor: Colors.orange, // inkwell color
+                        splashColor: Colors.blue, // inkwell color
                         child: SizedBox(
                           width: 56,
                           height: 56,
