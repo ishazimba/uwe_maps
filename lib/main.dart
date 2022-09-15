@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uwefrenchaymaps/secrets.dart'; // Stores the Google Maps API Key
+import 'package:uwefrenchaymaps/secret_key.dart'; // Stores the Google Maps API Key
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -594,7 +594,7 @@ class _MapViewState extends State<MapView> {
   ) async {
     polylinePoints = PolylinePoints();
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-      Secrets.API_KEY, // Google Maps API Key
+      secretKey.API_KEY, // contains Google Maps API Key
       PointLatLng(startLatitude, startLongitude),
       PointLatLng(destinationLatitude, destinationLongitude),
       travelMode: TravelMode.transit,
