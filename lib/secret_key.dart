@@ -1,4 +1,4 @@
 class secretKey {
-  // Add your Google Maps API Key here
-  static const API_KEY = 'AIzaSyDTocRLUkKLjvGniJvL_vAOAqgierv4Muk';
+  // Google Maps API Key
+  static const API_KEY = 'AIzaSyC1LMQqwGOciuG2Kz2PFuGuHRgi8oXeMJc';
 }

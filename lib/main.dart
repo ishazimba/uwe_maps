@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uwefrenchaymaps/secret_key.dart'; // Stores the Google Maps API Key
+import 'package:uwefrenchaymaps/secret_key.dart'; //Google Maps API Key
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -106,7 +106,7 @@ class _MapViewState extends State<MapView> {
     );
   }
 
-  // Method for retrieving the current location
+  // Method to retrieve the current location
   _getCurrentLocation() async {
     await Geolocator.getCurrentPosition(
             desiredAccuracy: LocationAccuracy.bestForNavigation)
@@ -129,7 +129,7 @@ class _MapViewState extends State<MapView> {
     });
   }
 
-  // Method for retrieving the address
+  // Method to retrieve the address
   _getAddress() async {
     try {
       List<Placemark> p = await placemarkFromCoordinates(
@@ -148,7 +148,7 @@ class _MapViewState extends State<MapView> {
     }
   }
 
-  // Method for calculating the distance between two places
+  // Method to calculate the distance between two places
   Future<bool> _calculateDistance() async {
     try {
       // Retrieving placemarks from addresses
@@ -156,9 +156,8 @@ class _MapViewState extends State<MapView> {
       List<Location> destinationPlacemark =
           await locationFromAddress(_destinationAddress);
 
-      // Use the retrieved coordinates of the current position,
-      // instead of the address if the start position is user's
-      // current position, as it results in better accuracy.
+      // Use the retrieved coordinates of the current position instead of the address if the start position
+      // is user's current position, as it results in better accuracy.
       double startLatitude = _startAddress == _currentAddress
           ? _currentPosition.latitude
           : startPlacemark[0].latitude;
@@ -174,7 +173,7 @@ class _MapViewState extends State<MapView> {
       String destinationCoordinatesString =
           '($destinationLatitude, $destinationLongitude)';
 
-      // Start Location Marker
+      // Starting point Location Marker
       Marker startMarker = Marker(
         markerId: MarkerId(startCoordinatesString),
         position: LatLng(startLatitude, startLongitude),
@@ -185,7 +184,7 @@ class _MapViewState extends State<MapView> {
         icon: BitmapDescriptor.defaultMarker,
       );
 
-      // Destination Location Marker
+      // Location Marker for destination
       Marker destinationMarker = Marker(
         markerId: MarkerId(destinationCoordinatesString),
         position: LatLng(destinationLatitude, destinationLongitude),
@@ -196,7 +195,7 @@ class _MapViewState extends State<MapView> {
         icon: BitmapDescriptor.defaultMarker,
       );
 
-      // Adding the markers to the list
+      // Add markers to the list
       markers.add(startMarker);
       markers.add(destinationMarker);
 
@@ -516,7 +515,7 @@ class _MapViewState extends State<MapView> {
         'DESTINATION COORDINATES: ($destinationLatitude, $destinationLongitude)',
       );
 
-      // Calculating to check that the position relative to the frame, and pan & zoom the camera accordingly.
+      // Calculate to check if the position relative to the frame, and pan & zoom the camera accordingly.
       double miny = (startLatitude <= destinationLatitude)
           ? startLatitude
           : destinationLatitude;
@@ -536,7 +535,7 @@ class _MapViewState extends State<MapView> {
       double northEastLatitude = maxy;
       double northEastLongitude = maxx;
 
-      // Accommodate the two locations within the camera view of the map
+      // Accommodates the two locations within the camera view of the map
       mapController.animateCamera(
         CameraUpdate.newLatLngBounds(
           LatLngBounds(
@@ -574,8 +573,8 @@ class _MapViewState extends State<MapView> {
     return false;
   }
 
-  // Formula to calculate distance between two coordinates
   // https://stackoverflow.com/a/54138876/11910277
+  // to calculate distance between two coordinates
   double _coordinateDistance(lat1, lon1, lat2, lon2) {
     var p = 0.017453292519943295;
     var c = cos;
@@ -585,7 +584,7 @@ class _MapViewState extends State<MapView> {
     return 12742 * asin(sqrt(a));
   }
 
-  // Create the polylines for showing the route between two places
+  // polyline showing the path between two places
   _createPolylines(
     double startLatitude,
     double startLongitude,
@@ -594,7 +593,7 @@ class _MapViewState extends State<MapView> {
   ) async {
     polylinePoints = PolylinePoints();
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-      secretKey.API_KEY, // contains Google Maps API Key
+      secretKey.API_KEY, // Google Maps API Key
       PointLatLng(startLatitude, startLongitude),
       PointLatLng(destinationLatitude, destinationLongitude),
       travelMode: TravelMode.transit,
@@ -634,7 +633,7 @@ class _MapViewState extends State<MapView> {
         key: _scaffoldKey,
         body: Stack(
           children: <Widget>[
-            // Map View
+            // Map View on the screen
             GoogleMap(
               markers: Set<Marker>.from(markers),
               initialCameraPosition: _initialLocation,
@@ -646,6 +645,7 @@ class _MapViewState extends State<MapView> {
               polylines: Set<Polyline>.of(polylines.values),
               onMapCreated: (GoogleMapController controller) async {
                 mapController = controller;
+
                 Position position = await _determinePosition();
                 mapController.animateCamera(CameraUpdate.newCameraPosition(
                     CameraPosition(
@@ -962,7 +962,7 @@ class _MapViewState extends State<MapView> {
               },
             ),
 
-            // Show zoom buttons
+            // zoom buttons
             SafeArea(
               child: Padding(
                 padding: const EdgeInsets.only(left: 10.0, bottom: 40.0),
@@ -990,9 +990,9 @@ class _MapViewState extends State<MapView> {
                     SizedBox(height: 10.0),
                     ClipOval(
                       child: Material(
-                        color: Colors.white, // button color
+                        color: Colors.white,
                         child: InkWell(
-                          splashColor: Colors.blue, // inkwell color
+                          splashColor: Colors.blue,
                           child: SizedBox(
                             width: 40,
                             height: 40,
@@ -1010,8 +1010,7 @@ class _MapViewState extends State<MapView> {
                 ),
               ),
             ),
-            // Show the place input fields & button for
-            // showing the route
+            // Show the input fields & button for showing the route
             SafeArea(
               child: Align(
                 alignment: Alignment.topCenter,
@@ -1159,7 +1158,7 @@ class _MapViewState extends State<MapView> {
                 ),
               ),
             ),
-            // Show current location button
+            // Shows the current location button icon
             SafeArea(
               child: Align(
                 alignment: Alignment.bottomRight,
@@ -1167,9 +1166,9 @@ class _MapViewState extends State<MapView> {
                   padding: const EdgeInsets.only(right: 10.0, bottom: 40.0),
                   child: ClipOval(
                     child: Material(
-                      color: Colors.white, // button color
+                      color: Colors.white,
                       child: InkWell(
-                        splashColor: Colors.blue, // inkwell color
+                        splashColor: Colors.blue,
                         child: SizedBox(
                           width: 56,
                           height: 56,
